@@ -1,4 +1,6 @@
 //Тоглоомийн бүх газарт ашиглагдах глобал хувьсагчдыг энд зарлая
+//Тоглоом дууссан эсэхийг хадгалах төлвийн хувьсагч
+var isGameOver;
 //Аль тоглогч шоо шидэх вэ гэдгийг энл хадгална
 var activePlayer;
 
@@ -14,7 +16,9 @@ var diceDom = document.querySelector(".dice");
 initGame();
 //Шоог шидэх эвент листенер
 document.querySelector(".btn-roll").addEventListener("click", function () {
-    //1-6 доторх санамсаргүй нэг тоо авж гаргана
+
+    if (isGameOver !== true) {
+       //1-6 доторх санамсаргүй нэг тоо авж гаргана
     var diceNumber = Math.floor(Math.random() * 6) + 1;
     //Шооны зургийг веб дээр гаргаж ирнэ
     
@@ -29,7 +33,11 @@ document.querySelector(".btn-roll").addEventListener("click", function () {
     } else {
         //1 буусан тоглогчийн ээлжийг энэ хэсэгт сольж өгнө
         switchToNextPlayer();
+    } 
+    } else {
+        alert("Тоглоом дууссан байна. New Game товчийг даран шинээр эхэлнэ үү.")
     }
+    
 });
 
 //HOLD товчны эвент листенер
@@ -47,7 +55,9 @@ document.querySelector(".btn-hold").addEventListener("click", function () {
     document.getElementById("score-" + activePlayer).textContent = scores[activePlayer];
     //Уг тоглогч хожсон эсэхийг (оноо нь 100-аас их эсэх ) шалгах
     if (scores[activePlayer] >= 10) {
-    //Ялагч гэсэн текстийг нэрний оронд гаргана
+    //Тоглоомыг дууссан төлөвт оруулна
+        isGameOver = true;
+        //Ялагч гэсэн текстийг нэрний оронд гаргана
         document.getElementById("name-" + activePlayer).textContent = "Winner!!!"
         document.querySelector(".player-" + activePlayer + "-panel").classList.add("winner");
         document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
@@ -83,6 +93,8 @@ function switchToNextPlayer() {
 document.querySelector(".btn-new").addEventListener("click", initGame);
 
 function initGame() {
+    //Тоглоом эхэллээ гэдэг төлөвь оруулна.
+    isGameOver = false;
     //Тоглогчийн ээлжийг хадгалах хувьсагч, нэгдүгээр тоглогчийг 0,хоёр дугаар тоглогчийг 1 гэж тэмдэглэе
 activePlayer = 0;
 
