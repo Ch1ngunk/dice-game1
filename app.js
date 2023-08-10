@@ -1,23 +1,17 @@
-//Тоглогчийн ээлжийг хадгалах хувьсагч, нэгдүгээр тоглогчийг 0,хоёр дугаар тоглогчийг 1 гэж тэмдэглэе
-var activePlayer = 0;
+//Тоглоомийн бүх газарт ашиглагдах глобал хувьсагчдыг энд зарлая
+//Аль тоглогч шоо шидэх вэ гэдгийг энл хадгална
+var activePlayer;
 
-//Тоглогчдын оноог хадгалах хувьсагч хэрэгтэй
-var scores = [0, 0];
+// 2 тоглогчийн цуглуулсан оноонууд
+var scores;
 
-//Тоглогчийн ээлжин дээр цуглуулж байгаа оноог хадгалах хувьсагч хэрэгтэй
-var roundScore = 0;
-//Шооны аль талаараа буусныг хадгалах хувьсагч хэрэгтэй, 1-6 гэсэн утгыг энэ хувьсагчид санамсаргүйгээр үүсгэж өгнө
-var diceNumber = Math.floor(Math.random()*6) + 1;
-
-
-
-//Программ эхлэхэд бэлтгэе
-document.getElementById("score-0").textContent = "0";
-document.getElementById("score-1").textContent = "0";
-document.getElementById("current-0").textContent = "0";
-document.getElementById("current-1").textContent = "0";
+//идэвхитэй тоглогчийн цуглуулж байгаа ээлжийн оноо
+var roundScore;
+// Шооны зургийг үзүүлэх элементийг DOM-оос хайж олоод энд хадгалъя
 var diceDom = document.querySelector(".dice");
-diceDom.style.display = "none";
+
+//Тоглоомыг эхлүүлнэ
+initGame();
 //Шоог шидэх эвент листенер
 document.querySelector(".btn-roll").addEventListener("click", function () {
     //1-6 доторх санамсаргүй нэг тоо авж гаргана
@@ -85,7 +79,37 @@ function switchToNextPlayer() {
     diceDom.style.display = "none";
 }
 
-//Шинэ тоглоом эхлүүлэх товчний эвент листенэр
-document.querySelector(".btn-new").addEventListener("click", function () {
-    
-});
+//New Game буюу Шинэ тоглоом эхлүүлэх товчний эвент листенэр
+document.querySelector(".btn-new").addEventListener("click", initGame);
+
+function initGame() {
+    //Тоглогчийн ээлжийг хадгалах хувьсагч, нэгдүгээр тоглогчийг 0,хоёр дугаар тоглогчийг 1 гэж тэмдэглэе
+activePlayer = 0;
+
+//Тоглогчдын оноог хадгалах хувьсагч хэрэгтэй
+scores = [0, 0];
+
+//Тоглогчийн ээлжин дээр цуглуулж байгаа оноог хадгалах хувьсагч хэрэгтэй
+roundScore = 0;
+//Шооны аль талаараа буусныг хадгалах хувьсагч хэрэгтэй, 1-6 гэсэн утгыг энэ хувьсагчид санамсаргүйгээр үүсгэж өгнө
+var diceNumber = Math.floor(Math.random()*6) + 1;
+
+
+
+//Программ эхлэхэд бэлтгэе
+document.getElementById("score-0").textContent = "0";
+document.getElementById("score-1").textContent = "0";
+document.getElementById("current-0").textContent = "0";
+document.getElementById("current-1").textContent = "0";
+//Тоглогчдын нэрийг буцааж гаргах
+    document.getElementById("name-0").textContent = "Player 1";
+    document.getElementById("name-1").textContent = "Player 2";
+    document.querySelector(".player-0-panel").classList.remove("winner");
+    document.querySelector(".player-1-panel").classList.remove("winner");
+
+    document.querySelector(".player-0-panel").classList.remove("active");
+    document.querySelector(".player-1-panel").classList.remove("active");
+
+    document.querySelector(".player-0-panel").classList.add("active");
+diceDom.style.display = "none";
+}
